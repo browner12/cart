@@ -1,0 +1,44 @@
+{
+    "name": "browner12/cart",
+    "type": "library",
+    "description": "shopping cart",
+    "keywords": [
+        "browner12",
+        "cart"
+    ],
+    "homepage": "https://github.com/browner12/cart",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Andrew Brown",
+            "email": "browner12@gmail.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php" : ">=5.6.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit" : "4.*",
+        "scrutinizer/ocular": "~1.1",
+        "squizlabs/php_codesniffer": "~2.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "browner12\\cart\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "browner12\\cart\\Test\\": "tests"
+        }
+    },
+    "scripts": {
+        "test": "phpunit"
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0-dev"
+        }
+    }
+}
