@@ -1,6 +1,6 @@
-<?php namespace App\Cart;
+<?php namespace browner12\cart\Contracts;
 
-interface CouponInterface
+interface Coupon
 {
     /**
      * get the flat discount of a coupon
@@ -33,7 +33,7 @@ interface CouponInterface
     /**
      * get the expiration date of the coupon
      *
-     * @return \Carbon\Carbon
+     * @return \Datetime
      */
     public function getExpirationDate();
 }

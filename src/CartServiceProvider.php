@@ -1,4 +1,4 @@
-<?php namespace App\Cart;
+<?php namespace browner12\cart;
 
 use Illuminate\Support\ServiceProvider;
 
@@ -9,7 +9,7 @@ class CartServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind('App\Cart\CartInterface', 'App\Cart\Cart');
+        $this->app->bind('browner12\cart\CartInterface', 'browner12\cart\Cart');
     }
 
 }

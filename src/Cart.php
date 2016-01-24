@@ -1,11 +1,8 @@
-<?php namespace App\Cart;
+<?php namespace browner12\cart;
 
-use App\Models\Coupon;
-use App\Models\OrderLine;
-use App\Models\Product;
+use browner12\cart\Contracts\Coupon;
 use browner12\money\Accountant;
 use browner12\money\Money;
-use Illuminate\Support\Facades\Session;
 
 class Cart implements CartInterface
 {
@@ -53,7 +50,7 @@ class Cart implements CartInterface
     private $lines = [];
 
     /**
-     * @var \App\Models\Coupon
+     * @var \brow
      */
     public $coupon;
 
@@ -63,27 +60,27 @@ class Cart implements CartInterface
     private $accountant;
 
     /**
+     * @var
+     */
+    private $session;
+
+    /**
      * constructor
      *
      * @param \browner12\money\Accountant $accountant
+     * @param                             $session
      */
-    public function __construct(Accountant $accountant)
+    public function __construct(Accountant $accountant, $session)
     {
         //assign
         $this->accountant = $accountant;
 
         //restore cart
         $this->restore();
-    }
 
-    /**
-     * destructor
-     */
-    /*    public function __destruct()
-        {
-            //save cart
-            $this->save();
-        }*/
+        //assign
+        $this->session = $session;
+    }
 
     /**
      * restore the cart from the session
@@ -93,10 +90,10 @@ class Cart implements CartInterface
     public function restore()
     {
         //retrieve session info
-        if (Session::has('cart')) {
+        if ($this->session->has('cart')) {
 
             //get cart
-            $session = Session::get('cart');
+            $session = $this->session->get('cart');
 
             //assign session info
             $this->data = $session['data'];
@@ -114,7 +111,7 @@ class Cart implements CartInterface
     public function save()
     {
         //save cart to session
-        Session::put('cart', $this->forSession());
+        $this->session->put('cart', $this->forSession());
     }
 
     /**
@@ -160,7 +157,7 @@ class Cart implements CartInterface
      * @param int $productId
      * @param int $quantity
      * @return int
-     * @throws \App\Cart\CartException
+     * @throws \browner12\cart\CartException
      */
     public function subtract($productId, $quantity = 1)
     {
@@ -190,7 +187,7 @@ class Cart implements CartInterface
      * @param int $productId
      * @param int $quantity
      * @return int
-     * @throws \App\Cart\CartException
+     * @throws \browner12\cart\CartException
      */
     public function update($productId, $quantity)
     {
@@ -219,7 +216,7 @@ class Cart implements CartInterface
      * remove line
      *
      * @param int $productId
-     * @throws \App\Cart\CartException
+     * @throws \browner12\cart\CartException
      */
     public function remove($productId)
     {
@@ -328,7 +325,7 @@ class Cart implements CartInterface
      *
      * @todo can we uncouple this from USD / base 100 currency?
      * @param array $input
-     * @throws \App\Cart\CartException
+     * @throws \browner12\cart\CartException
      */
     public function setShippingInfo(array $input)
     {
@@ -497,7 +494,7 @@ class Cart implements CartInterface
     /**
      * apply a coupon to the cart
      *
-     * @param \App\Models\Coupon $coupon
+     * @param \browner12\cart\Contracts\Coupon $coupon
      */
     public function applyCoupon(Coupon $coupon)
     {
@@ -539,7 +536,7 @@ class Cart implements CartInterface
     /**
      * retrieve the applied coupon
      *
-     * @return \App\Models\Coupon
+     * @return \browner12\cart\Contracts\Coupon
      */
     public function coupon()
     {
@@ -645,7 +642,7 @@ class Cart implements CartInterface
      * actually sent through as strings, which makes this a PITA
      *
      * @param int $productId
-     * @throws \App\Cart\CartException
+     * @throws \browner12\cart\CartException
      */
     private function validateProductId($productId)
     {
@@ -660,7 +657,7 @@ class Cart implements CartInterface
      * actually sent through as strings, which makes this a PITA
      *
      * @param int $quantity
-     * @throws \App\Cart\CartException
+     * @throws \browner12\cart\CartException
      */
     private function validateQuantity($quantity)
     {

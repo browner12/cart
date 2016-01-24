@@ -1,4 +1,4 @@
-<?php namespace App\Cart;
+<?php namespace browner12\cart;
 
 use Exception;
 

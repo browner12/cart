@@ -1,6 +1,6 @@
-<?php namespace App\Cart;
+<?php namespace browner12\cart;
 
-use App\Models\Coupon;
+use browner12\cart\Contracts\Coupon;
 
 interface CartInterface
 {
@@ -33,7 +33,7 @@ interface CartInterface
      * @param int $productId
      * @param int $quantity
      * @return bool
-     * @throws \App\Cart\CartException
+     * @throws \browner12\cart\CartException
      */
     public function update($productId, $quantity);
 
@@ -41,7 +41,7 @@ interface CartInterface
      * remove line
      *
      * @param int $productId
-     * @throws \App\Cart\CartException
+     * @throws \browner12\cart\CartException
      */
     public function remove($productId);
 
@@ -176,7 +176,7 @@ interface CartInterface
     /**
      * apply a coupon to the cart
      *
-     * @param \App\Models\Coupon $coupon
+     * @param \browner12\cart\Contracts\Coupon $coupon
      */
     public function applyCoupon(Coupon $coupon);
 
