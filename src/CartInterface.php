@@ -46,13 +46,6 @@ interface CartInterface
     public function remove($productId);
 
     /**
-     * clear cart
-     *
-     * @return void
-     */
-    public function clear();
-
-    /**
      * get lines
      *
      * @return array
@@ -104,16 +97,35 @@ interface CartInterface
     /**
      * clear checkout data
      *
-     * removes checkout data
-     *
-     * @return bool
+     * @return void
      */
     public function clearCheckoutData();
 
     /**
+     * clear shipping rates
+     *
+     * @return void
+     */
+    public function clearShippingRates();
+
+    /**
+     * clear order lines
+     *
+     * @return void
+     */
+    public function clearOrderLines();
+
+    /**
+     * clear coupon
+     *
+     * @return void
+     */
+    public function clearCoupon();
+
+    /**
      * cleanup
      *
-     * removes checkout data and empties cart
+     * @return void
      */
     public function cleanup();
 
