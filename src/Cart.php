@@ -50,7 +50,7 @@ class Cart implements CartInterface
     private $lines = [];
 
     /**
-     * @var \brow
+     * @var \browner12\cart\Contracts\Coupon
      */
     public $coupon;
 
@@ -235,18 +235,6 @@ class Cart implements CartInterface
     }
 
     /**
-     * clear cart
-     *
-     * @return void
-     */
-    public function clear()
-    {
-        $this->lines = [];
-        $this->rates = [];
-        $this->coupon = null;
-    }
-
-    /**
      * get lines
      *
      * @return array
@@ -389,11 +377,27 @@ class Cart implements CartInterface
      */
     public function clearShippingRates()
     {
-        //unset the rates
-        unset($this->rates);
-
-        //reinitialize
         $this->rates = [];
+    }
+
+    /**
+     * clear order lines
+     *
+     * @return void
+     */
+    public function clearOrderLines()
+    {
+        $this->lines = [];
+    }
+
+    /**
+     * clear coupon
+     *
+     * @return void
+     */
+    public function clearCoupon()
+    {
+        $this->coupon = null;
     }
 
     /**
@@ -406,7 +410,8 @@ class Cart implements CartInterface
         //cleanup everything
         $this->clearCheckoutData();
         $this->clearShippingRates();
-        $this->clear();
+        $this->clearOrderLines();
+        $this->clearCoupon();
 
         //return
         return $this;
@@ -514,19 +519,19 @@ class Cart implements CartInterface
         }
 
         //percentage discount
-        if ($this->coupon->percentageDiscount) {
-            return $this->accountant->tax($this->preTotal(), $this->coupon->percentageDiscount);
+        if ($this->coupon->getPercentageDiscount()) {
+            return $this->accountant->tax($this->preTotal(), $this->coupon->getPercentageDiscount());
         }
 
         //flat discount
-        if ($this->coupon->flatDiscount) {
+        if ($this->coupon->getFlatDiscount()) {
 
             //discount is more than total
-            if ($this->coupon->flatDiscount > $this->preTotal()) {
+            if ($this->coupon->getFlatDiscount() > $this->preTotal()) {
                 return $this->preTotal();
             }
 
-            return $this->coupon->flatDiscount;
+            return $this->coupon->getFlatDiscount();
         }
 
         //problem
@@ -681,5 +686,4 @@ class Cart implements CartInterface
 
         return null;
     }
-
 }
