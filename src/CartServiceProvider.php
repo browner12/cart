@@ -21,5 +21,4 @@ class CartServiceProvider extends ServiceProvider
             __DIR__.'/config/cart.php' => config_path('cart.php'),
         ]);
     }
-
 }

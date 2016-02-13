@@ -191,5 +191,4 @@ interface CartInterface
      * @param \browner12\cart\Contracts\Coupon $coupon
      */
     public function applyCoupon(Coupon $coupon);
-
 }
